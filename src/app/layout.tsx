@@ -22,11 +22,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Rendu du layout racine de l'application
   return (
     <html lang="fr ">
+      {/* Application des polices et du style global */}
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        {/* Affichage des enfants (pages) */}
         {children}
       </body>
     </html>
