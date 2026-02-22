@@ -1,5 +1,5 @@
 import { div } from "motion/react-client";
-import Navbar from "@/app/components/Navbar";
+import Navbar from "@/components/Navbar";
 
 export default function Home() {
   return (

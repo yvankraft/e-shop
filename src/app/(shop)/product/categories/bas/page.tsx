@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { i } from 'motion/react-client'
-import Navbar from '@/app/components/Navbar'
+import Navbar from '@/components/Navbar'
 
 export default function page() {
   return (
