@@ -1,5 +1,4 @@
-import React from 'react'
-
+"use client";
 export default function page() {
   // Rendu de la page d'inscription
   return (
