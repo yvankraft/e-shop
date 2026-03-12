@@ -33,3 +33,25 @@ export async function PUT(req: NextRequest){
         return NextResponse.json({ message: "Erreur serveur" }, { status: 500 });
     }
 }
+
+export async function DELETE() {
+  try {
+    const session = await getServerSession(authOptions);
+
+    if (!session || !session.user) {
+      return NextResponse.json({ message: "Non autorisé" }, { status: 401 });
+    }
+
+    await connectDB();
+
+    // 1. Supprimer l'utilisateur de la base de données
+    await User.findOneAndDelete({ email: session.user.email });
+
+    // 2. Optionnel : Supprimer aussi ses commandes ou son panier ici
+    // await Order.deleteMany({ userEmail: session.user.email });
+
+    return NextResponse.json({ message: "Compte supprimé" }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ message: "Erreur serveur" }, { status: 500 });
+  }
+}

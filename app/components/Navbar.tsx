@@ -18,7 +18,7 @@ const Navbar = () => {
   const getStyle = (href: string) => {
     const isActive = pathname === href;
     const baseStyle =
-      "flex items-center gap-2 px-4 py-2 rounded-2xl transition-all duration-300";
+      "flex items-center gap-2 px-4 py-1 rounded-2xl transition-all duration-300";
     return isActive
       ? `${baseStyle} bg-slate-500 text-white`
       : `${baseStyle} hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:hover:text-slate-200 dark:text-slate-400`;
@@ -29,7 +29,7 @@ const Navbar = () => {
       <motion.nav
         animate={{ y: 0 }}
         transition={{ type: "spring", stiffness: 100, damping: 10 }}
-        className=" nav fixed left-1/2 -translate-x-1/2 w-[96%] flex z-50 justify-evenly p-2 text-slate-800 dark:bg-zinc-900 dark:text-white rounded-2xl bg-white shadow-lg gap-4 max-w-400 my-4 border border-slate-200  dark:border-slate-700 dark:shadow-slate-700"
+        className=" nav fixed left-1/2 -translate-x-1/2 w-[96%] flex z-50 justify-evenly p-1 text-slate-800 dark:bg-zinc-900 dark:text-white rounded-2xl bg-white shadow-lg gap-4 max-w-400 my-1 border border-slate-200  dark:border-slate-700 dark:shadow-slate-700"
       >
         <div>
           <motion.div id="fisrt" className=" flex items-center h-full">
@@ -51,7 +51,7 @@ const Navbar = () => {
             whileTap={{ scale: 0.9 }}
             className="div"
           >
-            <Link href="/pages/hommes" className={getStyle("/pages/hommes")}>
+            <Link href="/pages/homme" className={getStyle("/pages/homme")}>
               hommes
             </Link>
           </motion.div>

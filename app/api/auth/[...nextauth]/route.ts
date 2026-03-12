@@ -6,6 +6,7 @@ import bcrypt from "bcrypt";
 import GithubProvider from "next-auth/providers/github";
 
 export const authOptions = {
+
     //authentification github
     providers: [
     GithubProvider({
@@ -39,7 +40,14 @@ callbacks:{
       return session;
     },
   },
-  session: { strategy: "jwt" as const },
+  //Gestion de cookies
+  session: {
+    strategy: "jwt" as const, // Utilisation des JSON Web Tokens
+    maxAge: 24 * 60 * 60, // Durée de vie en SECONDES (ici 24h)
+    updateAge: 24 * 60 * 60, // À quelle fréquence le cookie est mis à jour
+   
+  },
+
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: "/login",
