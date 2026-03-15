@@ -1,6 +1,6 @@
 "use client";
-import { motion, AnimatePresence } from "framer-motion";
-import { ReactNode } from "react";
+import { motion, AnimatePresence } from "framer-motion"; // Ajoute AnimatePresence pour l'exit
+import { ReactNode, useEffect } from "react";
 import { X } from "lucide-react";
 
 interface ModalProps {
@@ -8,53 +8,56 @@ interface ModalProps {
   onClose: () => void;
   title: string;
   children: ReactNode;
-  danger?: boolean; // Si vrai, le bouton principal sera rouge
+  danger?: boolean;
 }
 
 const Modal = ({ isOpen, onClose, title, children, danger }: ModalProps) => {
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, [onClose]);
+
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          {/* 1. Backdrop avec flou progressif */}
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          {/* L'Arrière-plan flouté (Overlay) */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-slate-900/40 backdrop-blur-md"
+            className="absolute inset-0 bg-black/40 z-40 backdrop-blur-xl"
           />
 
-          {/* 2. Fenêtre de la Modal */}
+          {/* La Boite de la Modal (Centrée) */}
           <motion.div
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
-            transition={{ type: "spring", damping: 20, stiffness: 300 }}
-            onClick={(e) => e.stopPropagation()}
-            className="relative w-full max-w-sm overflow-hidden bg-white/90 dark:bg-zinc-900/90 border border-white/20 dark:border-zinc-800 shadow-2xl rounded-[2.5rem]"
+            className="relative bg-white dark:bg-zinc-900 
+                border border-slate-200 dark:border-slate-800 
+                rounded-3xl shadow-2xl flex flex-col 
+                w-[clamp(50%,700px,95%)] h-[min(50vh,350px)] 
+                overflow-hidden z-10"
           >
-            {/* Barre de décoration haute */}
+            {/* Barre de couleur danger/info */}
             <div
               className={`h-2 w-full ${danger ? "bg-red-500" : "bg-blue-500"}`}
             />
 
-            <div className="p-8">
-              {/* Header */}
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-2xl font-extrabold text-slate-800 dark:text-white tracking-tight">
+            <div className="p-8 h-full flex flex-col">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold text-slate-800 dark:text-white">
                   {title}
                 </h2>
-                <button
-                  onClick={onClose}
-                  className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-full transition-colors"
-                >
-                  <X size={20} className="text-slate-400" />
-                </button>
               </div>
 
-              {/* Corps */}
-              <div className="text-slate-600 dark:text-zinc-400 font-medium leading-relaxed">
+              {/* Contenu */}
+              <div className="flex-1 overflow-y-auto text-slate-600 dark:text-zinc-400">
                 {children}
               </div>
             </div>

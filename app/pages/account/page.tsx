@@ -22,6 +22,9 @@ const page = () => {
   const { data: session, status } = useSession();
   //etat de chargemnet
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const close = () => setModalOpen(false);
+  const open = () => setModalOpen(true);
   const [loading, setLoading] = useState(false);
   const [showAlert, setShowAlert] = useState({
     isOpen: false,
@@ -69,35 +72,56 @@ const page = () => {
   };
 
   return (
-    <div className=" pt-[9%]  p-2">
-      <Modal
-        isOpen={isLogoutModalOpen} // On passe la variable d'état
-        onClose={() => setIsLogoutModalOpen(false)} // On passe la fonction pour fermer
-        title="Déconnexion"
-        danger={true}
-      >
-        {/* Contenu de la modale */}
-        <div className="flex flex-col gap-3">
-          <button
-            onClick={() => signOut({ callbackUrl: "/" })} // Action finale
-            className="..."
-          >
-            Confirmer
-          </button>
+    <div className=" p-2">
+      {isLogoutModalOpen && (
+        <Modal
+          isOpen={isLogoutModalOpen}
+          onClose={() => setIsLogoutModalOpen(false)}
+          title="Déconnexion"
+          danger={true}
+        >
+          <div className="flex flex-col gap-6">
+            {/* Message d'explication */}
+            <div className="flex flex-col gap-2">
+              <p className="text-slate-600 dark:text-zinc-400 text-lg">
+                Vous allez être déconnecté de votre compte.
+              </p>
+              <p className="text-sm text-slate-400 dark:text-zinc-500">
+                Vous devrez saisir à nouveau vos identifiants pour accéder à vos
+                commandes.
+              </p>
+            </div>
 
-          <button
-            onClick={() => setIsLogoutModalOpen(false)} // Annulation
-            className="..."
-          >
-            Annuler
-          </button>
-        </div>
-      </Modal>
+            {/* Actions */}
+            <div className="flex flex-col sm:flex-row gap-3 mt-2">
+              <button
+                onClick={() => signOut({ callbackUrl: "/" })}
+                className="flex-1 flex items-center justify-center gap-2 py-2 px-6 
+                   bg-red-600 hover:bg-red-700 text-white font-bold 
+                   rounded-2xl transition-all active:scale-95 shadow-lg shadow-red-500/20"
+              >
+                <LogOut size={20} />
+                Confirmer
+              </button>
+
+              <button
+                onClick={() => setIsLogoutModalOpen(false)}
+                className="flex-1 py-2 px-6 bg-slate-100 dark:bg-zinc-800 
+                   text-slate-600 dark:text-zinc-300 font-bold 
+                   rounded-2xl hover:bg-slate-200 dark:hover:bg-zinc-700 
+                   transition-all active:scale-95"
+              >
+                Annuler
+              </button>
+            </div>
+          </div>
+        </Modal>
+      )}
       {/* MODE DESKTOP : Grille visible uniquement sur grand écran */}
       <div className="hidden md:grid grid-cols-7 gap-2">
         <div className="col-span-2">
           <div
-            className=" min-h-screen p-8 -mt-16
+            className=" min-h-screen p-8 
                 backdrop-blur-md bg-white/80 dark:bg-zinc-900/80 
                 border border-slate-200 dark:border-slate-700 
                 rounded-3xl shadow-xl flex flex-col items-center"
@@ -109,7 +133,7 @@ const page = () => {
       </div>
 
       {/* MODE MOBILE : Liste simple, le clic redirige vers une autre page */}
-      <div className="md:hidden mt-8 p-2 flex flex-col gap-4 w-full">
+      <div className="md:hidden p-2 flex flex-col gap-4 w-full">
         <div className="flex items-center flex-col">
           <Avatar name={session.user?.name} size="lg" />
           <p className="underline-offset-4 underline text-blue-600">
@@ -131,7 +155,7 @@ const page = () => {
             {/* 2. Texte : Il prend tout l'espace restant (flex-1) */}
             <Link
               href="/pages/account/orders/profil"
-              className="flex-1 text-left px-2 text-gray-700 font-medium"
+              className="flex-1 text-left px-2 text-gray-700 dark:text-white font-medium"
             >
               Profil
             </Link>
@@ -150,7 +174,7 @@ const page = () => {
             {/* 2. Texte : Il prend tout l'espace restant (flex-1) */}
             <Link
               href="/pages/account/orders/historique"
-              className="flex-1 text-left px-2 text-gray-700 font-medium"
+              className="flex-1 text-left px-2 text-gray-700 dark:text-white  font-medium"
             >
               Historique des commandes
             </Link>
@@ -175,7 +199,7 @@ const page = () => {
             {/* 2. Texte : Il prend tout l'espace restant (flex-1) */}
             <Link
               href="/pages/account/orders/paiement"
-              className="flex-1 text-left px-2 text-gray-700 font-medium"
+              className="flex-1 text-left px-2 text-gray-700 font-medium dark:text-white "
             >
               Paiement
             </Link>
@@ -194,7 +218,7 @@ const page = () => {
             {/* 2. Texte : Il prend tout l'espace restant (flex-1) */}
             <Link
               href="/pages/account/orders/sicherheit"
-              className="flex-1 text-left px-2 text-gray-700 font-medium"
+              className="flex-1 text-left px-2 text-gray-700 font-medium dark:text-white "
             >
               Sécurité
             </Link>
@@ -213,7 +237,7 @@ const page = () => {
             {/* 2. Texte : Il prend tout l'espace restant (flex-1) */}
             <Link
               href="/pages/account/orders/Protect"
-              className="flex-1 text-left px-2 text-gray-700 font-medium"
+              className="flex-1 text-left px-2 text-gray-700 font-medium dark:text-white "
             >
               Protection des données
             </Link>
@@ -229,7 +253,7 @@ const page = () => {
             onClick={() => setIsLogoutModalOpen(true)}
             className="py-2 px-4 backdrop-blur-md bg-white/80 dark:bg-zinc-900/80 
                 border border-slate-200 dark:border-slate-700 
-                rounded-2xl shadow-xl flex flex-co mt-2 gap-2"
+                rounded-2xl shadow-xl flex mt-2 gap-2"
           >
             <LogOut size={28} className="text-red-600" />
             <span className="font-medium">Déconnexion</span>

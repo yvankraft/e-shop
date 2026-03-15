@@ -2,7 +2,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { HiOutlineUser, HiOutlineShoppingBag } from "react-icons/hi2";
+import {
+  HiOutlineUser,
+  HiOutlineShoppingBag,
+  HiOutlineHome,
+  HiOutlineTag,
+} from "react-icons/hi2";
 import { useSession } from "next-auth/react";
 
 const Navbar = () => {
@@ -26,13 +31,15 @@ const Navbar = () => {
 
   return (
     <nav>
+      {/* version desktop */}
+
       <motion.nav
         animate={{ y: 0 }}
         transition={{ type: "spring", stiffness: 100, damping: 10 }}
-        className=" nav fixed left-1/2 -translate-x-1/2 w-[96%] flex z-50 justify-evenly p-1 text-slate-800 dark:bg-zinc-900 dark:text-white rounded-2xl bg-white shadow-lg gap-4 max-w-400 my-1 border border-slate-200  dark:border-slate-700 dark:shadow-slate-700"
+        className=" w-[96%] mx-auto flex z-50 justify-evenly p-1 text-slate-800 dark:bg-zinc-900 dark:text-white rounded-2xl bg-white shadow-lg gap-4 max-w-400 my-1 border border-slate-200  dark:border-slate-700 dark:shadow-slate-700"
       >
         <div>
-          <motion.div id="fisrt" className=" flex items-center h-full">
+          <motion.div id="fisrt" className="hidden md:flex items-center h-full">
             <p className="text-2xl font-bold">logo</p>
           </motion.div>
         </div>
@@ -43,7 +50,12 @@ const Navbar = () => {
             className="div"
           >
             <Link href="/" className={getStyle("/")}>
-              Acceuil
+              <HiOutlineTag size={24} className="md:hidden" />
+              <span
+                className={`${pathname === "/" ? "block" : "hidden"} md:block font-bold text-sm`}
+              >
+                Acceuil
+              </span>
             </Link>
           </motion.div>
           <motion.div
@@ -52,7 +64,13 @@ const Navbar = () => {
             className="div"
           >
             <Link href="/pages/homme" className={getStyle("/pages/homme")}>
-              hommes
+              <HiOutlineTag size={24} className="md:hidden" />
+              <span
+                className={`${pathname === "/pages/homme" ? "block" : "hidden"} md:block font-bold text-sm`}
+              >
+                {" "}
+                hommes
+              </span>
             </Link>
           </motion.div>
           <motion.div
@@ -61,7 +79,12 @@ const Navbar = () => {
             className="div"
           >
             <Link href="/pages/femmes" className={getStyle("/pages/femmes")}>
-              femmes
+              <HiOutlineTag size={24} className="md:hidden" />
+              <span
+                className={`${pathname === "/pages/femmes" ? "block" : "hidden"} md:block font-bold text-sm`}
+              >
+                femmes
+              </span>
             </Link>
           </motion.div>
           <motion.div
@@ -70,7 +93,12 @@ const Navbar = () => {
             className="div"
           >
             <Link href="/pages/enfants" className={getStyle("/pages/enfants")}>
-              enfants
+              <HiOutlineTag size={24} className="md:hidden" />
+              <span
+                className={`${pathname === "/pages/enfants" ? "block" : "hidden"} md:block font-bold text-sm`}
+              >
+                enfants
+              </span>
             </Link>
           </motion.div>
         </div>
@@ -91,6 +119,7 @@ const Navbar = () => {
           </Link>
         </div>
       </motion.nav>
+      {/* version mobile */}
     </nav>
   );
 };
