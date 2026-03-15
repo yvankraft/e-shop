@@ -41,7 +41,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="flex min-h-screen w-full justify-center items-center pt-20 bg-slate-50 dark:bg-zinc-950 px-4">
+    <div className="flex min-h-screen w-full justify-center items-center bg-slate-50 dark:bg-zinc-950 px-4">
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
